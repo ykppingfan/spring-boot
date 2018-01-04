@@ -27,11 +27,7 @@ public class MyClassLoader extends ClassLoader {
             //将class文件进行解密
             FileInputStream fis = new FileInputStream(classPathFile);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            int b = 0;
-            while (-1 != (b = fis.read())) {
-                bos.write(b);
-            }
-//            encodeAndDecode(fis,bos);
+            encodeAndDecode(fis,bos);
             byte[] classByte = bos.toByteArray();
             //将字节流变成一个class
             return defineClass(classByte,0,classByte.length);
@@ -51,7 +47,7 @@ public class MyClassLoader extends ClassLoader {
         FileInputStream fis = new FileInputStream(srcPath);
         FileOutputStream fos = new FileOutputStream(desPathFile);
         //将class进行加密
-//        encodeAndDecode(fis,fos);
+        encodeAndDecode(fis,fos);
         fis.close();
         fos.close();
     }
@@ -63,7 +59,7 @@ public class MyClassLoader extends ClassLoader {
      * @throws Exception
      */
     private static void encodeAndDecode(InputStream is, OutputStream os) throws Exception{
-        int bytes = -1;
+        int bytes;
         while((bytes = is.read())!= -1){
             bytes = bytes ^ 0xff;//和0xff进行异或处理
             os.write(bytes);
